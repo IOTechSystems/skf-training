@@ -1,0 +1,21 @@
+{
+  "apiVersion": "v2",
+  "devices": [
+    {
+      "name": "Virtual-Device",
+      "profileName": "device-virtual",
+      "protocols": {
+        "Virtual": {}
+      }
+    },
+    {
+      "name": "Virtual-Device2",
+      "profileName": "device-virtual2",
+      "protocols": {
+        "Other": {
+          "Address": "device-virtual-02"
+        }
+      }
+    }
+  ]
+}
