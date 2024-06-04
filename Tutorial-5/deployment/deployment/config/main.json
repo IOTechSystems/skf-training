@@ -1,0 +1,13 @@
+{
+  "xrt":"XRT::Config",
+  "logger":"IOT::Logger",
+  "pool":"IOT::ThreadPool",
+  "sched":"IOT::Scheduler",
+  "bus":"XRT::Bus",
+  "mqtt_bridge": "XRT::MQTTBridge",
+  "virtual":"XRT::VirtualDeviceService",
+  "s7":"XRT::S7DeviceService",
+  "opc-ua-server": "XRT::OPCUAServer",
+  "command": "XRT::Command",
+  "influxdb_exporter":"XRT::InfluxDBExporter"
+}

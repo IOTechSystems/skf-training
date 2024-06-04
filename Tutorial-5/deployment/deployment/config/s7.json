@@ -1,0 +1,20 @@
+{
+  "Library": "libxrt-s7-device-service.so",
+  "Factory": "xrt_s7_device_service_factory",
+  "Name": "s7",
+  "TelemetryTopic": "xrt/devices/s7/telemetry",
+  "RequestTopic": "xrt/devices/s7/request",
+  "ReplyTopic": "xrt/devices/s7/reply",
+  "DiscoveryTopic": "xrt/devices/s7/discovery",
+  "EventTopic": "xrt/devices/s7/event",
+  "StatusTopic": "xrt/devices/s7/status",
+  "AutoRegister": false,
+  "PublishRegisteredDevices": true,
+  "PublishAttributes": true,
+  "ProfileDir": "${XRT_PROFILE_DIR}/s7",
+  "StateDir": "${XRT_STATE_DIR}/s7",
+  "Scheduler": "sched",
+  "Logger": "logger",
+  "ThreadPool": "pool",
+  "Bus": "bus"
+}

@@ -1,0 +1,58 @@
+networks:
+  iotech:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.10.0.0/24
+          gateway: 10.10.0.1
+
+services:
+  mqtt:
+    image: eclipse-mosquitto:latest
+    volumes:
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
+    ports:
+      - "1883:1883"
+    networks:
+      - iotech
+      
+  s7-sim:
+    image: iotechsys/s7-sim:2.0
+    container_name: s7-sim
+    networks:
+      iotech:
+        ipv4_address: 10.10.0.50
+    depends_on:
+      mqtt:
+        condition: service_started
+
+  xrt:
+    image: iotechsys/xrt-server:2.2
+    container_name: xrt-opc-ua
+    restart: unless-stopped
+    depends_on:
+      mqtt:
+        condition: service_started
+      s7-sim:
+        condition: service_started
+    environment:
+      LD_LIBRARY_PATH: /opt/iotech/xrt/2.2/lib:/opt/iotech/iot/1.5/lib
+      XRT_PROFILE_DIR: /opt/iotech/xrt/2.2/deployment/profiles
+      XRT_STATE_DIR: /opt/iotech/xrt/2.2/deployment/state
+      XRT_CONFIG_DIR: /opt/iotech/xrt/2.2/deployment/config
+      XRT_LICENSE_FILE: /opt/iotech/xrt/2.2/license.json
+      XRT_MQTT_BROKER: tcp://localhost:1883
+      S7_SIM_ADDRESS: tcp://mqtt:1883
+      XRT_MQTT_USERNAME:
+      XRT_MQTT_PASSWORD:
+    ports:
+      - 5060:80
+      - 4840:4840
+    volumes:
+      - /home/jonathan/Dev/SKF/Tutorial-3/opc-ua-server/deployment:/opt/iotech/xrt/2.2/deployment
+      - /home/jonathan/Downloads/IOTech_boop_Developer.lic:/opt/iotech/xrt/2.2/license.json
+
+    networks:
+      - iotech
+      
+  

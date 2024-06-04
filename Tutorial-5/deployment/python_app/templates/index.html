@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MQTT Messages</title>
+</head>
+<body>
+    <h1>Last Messages Received</h1>
+    <p>Last message received from Virtual: {{ last_message_topic1 }}</p>
+    <p>Last message received from S7: {{ last_message_topic2 }}</p>
+    <p>Value which will be written to XRT (V1 * V2): {{ last_message_topic1 * last_message_topic2 }}</p>
+    <p>Time until next message Published: {{ countdown_time|round(2) }} seconds</p>
+</body>
+</html>
