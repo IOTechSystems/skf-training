@@ -11,7 +11,7 @@
   "ProfileDir": "${XRT_PROFILE_DIR}/virtual",
   "StateDir": "${XRT_STATE_DIR}/virtual",
   "Scheduler": "sched",
-  "Logger": "logger_debug",
+  "Logger": "logger",
   "ThreadPool": "pool",
   "Bus": "bus"
 }

@@ -3,7 +3,7 @@
     "schedules": [
       {
         "device": "Virtual-Device",
-        "interval": 5000000,
+        "interval": 500000,
         "name": "schedule",
         "resource": [
             "SineWaveWithOffsetAndPhase"

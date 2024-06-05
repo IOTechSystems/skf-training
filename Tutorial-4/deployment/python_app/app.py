@@ -1,75 +1,70 @@
 from flask import Flask, render_template
 import paho.mqtt.client as mqtt
-from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import datetime, timedelta
-import time
 import json
+import joblib
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
 
 app = Flask(__name__)
 
 # MQTT broker details
 broker = "mqtt"  # Replace with your MQTT broker URL
 port = 1883  # Replace with your MQTT broker port
-topic1 = "xrt/devices/virtual/telemetry"  # Replace with your first MQTT topic
-topic2 = "xrt/devices/s7/telemetry"  # Replace with your second MQTT topic
-result_topic = "xrt/devices/virtual/request"  # Replace with your result MQTT topic
-
-# Global variables to store the last received messages and countdown time
-last_message_topic1 = 0
-last_message_topic2 = 0
-next_message_time = datetime.now()  + timedelta(seconds=10)
+topic = "xrt/devices/virtual/telemetry"  # Replace with your first MQTT topic
+result_topic = "xrt/devices/s7/request"  # Replace with your result MQTT topic
 is_connected = False
+values = [None, None, None]
+alarm = False
+
+# Load the model based on data within safe limits
+
 
 # MQTT callback function
 def on_message(client, userdata, msg):
-    global last_message_topic1, last_message_topic2
-    if msg.topic == topic1:
-        value = get_value(msg.payload, "SineWaveWithOffsetAndPhase")
-        if value is None:
+    global values
+    global alarm
+    with open('model.pkl', 'rb') as file:
+        loaded_model = joblib.load(file)
+    if msg.topic == topic:
+        get_values(msg.payload)
+        if(values[0] is None or values[1] is None):
             return
-        last_message_topic1 = value
-    elif msg.topic == topic2:
-        value = get_value(msg.payload, "DB_1_I64")
-        if value is None:
-            return
-        last_message_topic2 = value
+        max_temperature = loaded_model.predict([[values[0], values[1]]])[0] * 1.1
+        new_alarm = values[2] > max_temperature
+        if new_alarm != alarm:
+            alarm = new_alarm
+            print(f"Alarm: {alarm}")
+            payload = {
+                "client": "example",
+                "request_id": "1031",
+                "op": "device:put",
+                "type": "xrt.request:1.0",
+                "device": "S7-Server",
+                "values": {
+                    "DB_1_Bool_1": str(alarm)
+                }
+            }
+            client.publish(result_topic, json.dumps(payload))
 
-def get_value(payload, res):
+
+def get_values(payload):
+    global values
     try:
         message = json.loads(payload)
         if message is not None:
             readings = message.get("readings", {})
-            if res in readings:
-                value = readings[res].get("value")
-                return value
-        return None
+            if "CNCMillRPM" in readings:
+                values[0] = readings["CNCMillRPM"].get("value")
+            if "CNCMillVibration" in readings:
+                values[1] = readings["CNCMillVibration"].get("value")
+            if "CNCMillTemperature" in readings:
+                values[2] = readings["CNCMillTemperature"].get("value")
+        return
     except Exception as e:
         print(f"An error occurred while extracting the value: {str(e)}")
-        return None
+        return
 
-# Function to multiply the values and publish the result
-def multiply_and_publish():
-    global mqttc
-    global next_message_time
-    try:
-        value1 = float(last_message_topic1)
-        value2 = float(last_message_topic2)
-        result = value1 * value2
-        next_message_time = datetime.now() + timedelta(seconds=10)
-        payload = {
-            "client": "example",
-            "request_id": "1031",
-            "op": "device:put",
-            "type": "xrt.request:1.0",
-            "device": "Virtual-Device",
-            "values": {
-                "StoreInt32Value": result
-            }
-        }
-        mqttc.publish("xrt/devices/virtual/request", json.dumps(payload))
-    except ValueError:
-        next_message_time = datetime.now() + timedelta(seconds=10)
-        pass
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
@@ -77,8 +72,7 @@ def on_connect(client, userdata, flags, rc):
     if rc == 0:
         print("Connected to MQTT broker")
         is_connected = True
-        client.subscribe(topic1)
-        client.subscribe(topic2)
+        client.subscribe(topic)
     else:
         print(f"Failed to connect to MQTT broker, return code: {rc}")
         is_connected = False
@@ -95,16 +89,10 @@ except ConnectionRefusedError:
     print("Connection to MQTT broker refused. Check if the broker is running.")
 
 
-# Create a background scheduler
-scheduler = BackgroundScheduler()
-scheduler.add_job(multiply_and_publish, 'interval', seconds=10)
-scheduler.start()
-
 @app.route('/')
 def index():
-    countdown_time = (next_message_time - datetime.now()).total_seconds()
-    return render_template('index.html', last_message_topic1=last_message_topic1,
-                           last_message_topic2=last_message_topic2, countdown_time=countdown_time)
+    return render_template('index.html', values=values,
+                           alarm=alarm, isConnected=is_connected)
 
 if __name__ == '__main__':
     mqttc.loop_start()
