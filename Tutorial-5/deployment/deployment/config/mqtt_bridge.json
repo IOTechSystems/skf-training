@@ -8,9 +8,9 @@
     "xrt/devices/virtual/status",
     "xrt/devices/s7/telemetry",
     "xrt/devices/s7/reply",
-    "xrt/devices/s7/discovery",
-    "xrt/devices/s7/status"  ],
-  "MQTTPatterns": [ "xrt/devices/virtual/request","xrt/devices/s7/request"],
+    "xrt/devices/s7/status"
+  ],
+  "MQTTPatterns": [ "xrt/devices/virtual/request", "xrt/devices/s7/request"],
   "MQTTConfig":
   {
     "ServerURI": "${XRT_MQTT_BROKER}",

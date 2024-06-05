@@ -5,9 +5,12 @@
     "xrt/devices/virtual/telemetry",
     "xrt/devices/virtual/reply",
     "xrt/devices/virtual/discovery",
-    "xrt/devices/virtual/status"
+    "xrt/devices/virtual/status",
+    "xrt/devices/s7/telemetry",
+    "xrt/devices/s7/reply",
+    "xrt/devices/s7/status"
   ],
-  "MQTTPatterns": [ "xrt/devices/virtual/request"],
+  "MQTTPatterns": [ "xrt/devices/virtual/request", "xrt/devices/s7/request"],
   "MQTTConfig":
   {
     "ServerURI": "${XRT_MQTT_BROKER}",

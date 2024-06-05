@@ -10,7 +10,7 @@ services:
   mqtt:
     image: eclipse-mosquitto:latest
     volumes:
-      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - ./s7/mosquitto.conf:/mosquitto/config/mosquitto.conf
     ports:
       - "1883:1883"
     networks:
@@ -46,7 +46,7 @@ services:
     ports:
       - 5060:80
     volumes:
-      - /home/jonathan/Dev/SKF/Tutorial-2/s7/deployment:/opt/iotech/xrt/2.2/deployment
-      - /home/jonathan/Downloads/IOTech_boop_Developer.lic:/opt/iotech/xrt/2.2/license.json
+      - ./s7/deployment:/opt/iotech/xrt/2.2/deployment
+      - ${XRT_LICENSE_FILE}:/opt/iotech/xrt/2.2/license.json
     networks:
       - iotech

@@ -35,7 +35,7 @@ services:
     ports:
       - 5060:80
     volumes:
-      - /home/jonathan/Dev/SKF/Tutorial-1/virtual/deployment:/opt/iotech/xrt/2.2/deployment
-      - /home/jonathan/Downloads/IOTech_boop_Developer.lic:/opt/iotech/xrt/2.2/license.json
+      - ./virtual/deployment:/opt/iotech/xrt/2.2/deployment
+      - ${XRT_LICENSE_FILE}:/opt/iotech/xrt/2.2/license.json
     networks:
       - iotech

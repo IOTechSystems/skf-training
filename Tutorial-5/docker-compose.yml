@@ -60,8 +60,8 @@ services:
       - 5060:80
       - 4840:4840
     volumes:
-      - /home/jonathan/Dev/SKF/Tutorial-5/deployment/deployment:/opt/iotech/xrt/2.2/deployment
-      - /home/jonathan/Downloads/IOTech_boop_Developer.lic:/opt/iotech/xrt/2.2/license.json
+      - ./deployment/deployment:/opt/iotech/xrt/2.2/deployment
+      - ${XRT_LICENSE_FILE}:/opt/iotech/xrt/2.2/license.json
 
     networks:
       - iotech
