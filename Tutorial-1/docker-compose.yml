@@ -17,7 +17,7 @@ services:
       - iotech
 
   xrt-virtual:
-    image: iotechsys/xrt-server:2.2
+    image: iotechsys/xrt:2.2
     container_name: xrt-device-virtual
     restart: unless-stopped
     depends_on:
