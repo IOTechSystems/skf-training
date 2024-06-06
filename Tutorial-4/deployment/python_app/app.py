@@ -5,8 +5,23 @@ import json
 import joblib
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
-
+from flask import Flask, render_template
+from flask_socketio import SocketIO, emit
+import paho.mqtt.client as mqtt
+import json
+import joblib
+allow_unsafe_werkzeug=True
 app = Flask(__name__)
+socketio = SocketIO(app)
+
+@socketio.on('connect')
+def handle_connect():
+    print('Client connected')
+
+@socketio.on('disconnect')
+def handle_disconnect():
+    print('Client disconnected')
+
 
 # MQTT broker details
 broker = "mqtt"  # Replace with your MQTT broker URL
@@ -46,7 +61,7 @@ def on_message(client, userdata, msg):
                 }
             }
             client.publish(result_topic, json.dumps(payload))
-
+        socketio.emit('update_values', {'values': values, 'alarm': bool(alarm)})
 
 def get_values(payload):
     global values
@@ -96,6 +111,4 @@ def index():
 
 if __name__ == '__main__':
     mqttc.loop_start()
-    app.run(host='0.0.0.0', port=8000)
-
-
+    socketio.run(app, host='0.0.0.0', port=8000, allow_unsafe_werkzeug=True)

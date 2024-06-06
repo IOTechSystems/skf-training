@@ -28,6 +28,16 @@ services:
     depends_on:
       mqtt:
         condition: service_started
+  
+  opc-ua-browser:
+    container_name: opc-ua-browser
+    image: iotechsys/opc-ua-browser:1.0.5
+    restart: unless-stopped 
+    networks:
+      - iotech
+    ports: 
+      - 8080:8080
+
 
   xrt:
     image: iotechsys/xrt-server:2.2

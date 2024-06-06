@@ -2,3 +2,5 @@ flask
 paho-mqtt
 joblib
 scikit-learn
+flask_socketio
+opcua

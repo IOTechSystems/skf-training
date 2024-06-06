@@ -2,6 +2,24 @@
 <html>
 <head>
   <title>CNC DATA</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.0/socket.io.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var socket = io();
+      
+      socket.on('update_values', function(data) {
+        document.getElementById('temperature').textContent = data.values[2];
+        document.getElementById('rpm').textContent = data.values[0];
+        document.getElementById('vibration').textContent = data.values[1];
+        document.getElementById('alarm').textContent = data.alarm;
+        document.getElementById('alarm-icon').textContent = data.alarm;
+
+        var alarmIcon = document.getElementById('alarm-icon');
+        alarmIcon.classList.toggle('bad', data.alarm);
+        alarmIcon.classList.toggle('good', !data.alarm);
+      });
+    });
+  </script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -77,36 +95,37 @@ h1 {
   <div class="container">
     <h1>Last Messages Received from CNC</h1>
     <div class="data-container">
-        <div class="data-item">
-          <div class="label">Connected:</div>
-          <div class="value{% if isConnected %} connected{% else %} disconnected{% endif %}">
-            {{ isConnected }}
-            <span class="status-icon{% if isConnected %} good{% else %} bad{% endif %}"></span>
-          </div>
-        </div>
-        
-        <div class="data-item">
-          <div class="label">Temperature:</div>
-          <div class="value">{{ values[2] }}</div>
-        </div>
-        
-        <div class="data-item">
-          <div class="label">RPM:</div>
-          <div class="value">{{ values[0] }}</div>
-        </div>
-        
-        <div class="data-item">
-          <div class="label">Vibration:</div>
-          <div class="value">{{ values[1] }}</div>
-        </div>
-        
-        <div class="data-item">
-          <div class="label">Alarm Triggered?</div>
-          <div class="value{% if alarm %} alarm{% endif %}">
-                        {{ alarm }}
-            <span class="status-icon{% if alarm %} bad{% else %} good{% endif %}"></span>
-          </div>
+      <div class="data-item">
+        <div class="label">Connected:</div>
+        <div id="connected" class="value{% if isConnected %} connected{% else %} disconnected{% endif %}">
+          {{ isConnected }}
+          <span id="connected-icon" class="status-icon{% if isConnected %} good{% else %} bad{% endif %}"></span>
         </div>
       </div>
-    </body>
-    </html>
+      
+      <div class="data-item">
+        <div class="label">Temperature:</div>
+        <div id="temperature" class="value">{{ values[2] }}</div>
+      </div>
+      
+      <div class="data-item">
+        <div class="label">RPM:</div>
+        <div id="rpm" class="value">{{ values[0] }}</div>
+      </div>
+      
+      <div class="data-item">
+        <div class="label">Vibration:</div>
+        <div id="vibration" class="value">{{ values[1] }}</div>
+      </div>
+      
+      <div class="data-item">
+        <div class="label">Alarm Triggered?</div>
+        <div id="alarm" class="value{% if alarm %} alarm{% endif %}">
+          {{ alarm }}
+          <span id="alarm-icon" class="status-icon{% if alarm %} bad{% else %} good{% endif %}"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

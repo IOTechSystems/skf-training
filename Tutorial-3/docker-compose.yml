@@ -15,6 +15,15 @@ services:
       - "1883:1883"
     networks:
       - iotech
+
+  opc-ua-browser:
+    container_name: opc-ua-browser
+    image: iotechsys/opc-ua-browser:1.0.5
+    restart: unless-stopped 
+    networks:
+      - iotech
+    ports: 
+      - 8080:8080
       
   s7-sim:
     image: iotechsys/s7-sim:2.0
