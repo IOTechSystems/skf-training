@@ -6,7 +6,7 @@ mosquitto_pub -t xrt/devices/s7/request -m \
   "request_id": "1090",
   "op": "device:put",
   "type": "xrt.request:1.0",
-  "device": "s7-sim",
+  "device": "S7-Server",
   "values": {
     "DB_1_UI8": 254",
     "DB_1_UI16": 12345,

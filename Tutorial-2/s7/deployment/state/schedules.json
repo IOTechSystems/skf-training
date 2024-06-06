@@ -7,7 +7,7 @@
         "DB_1_I64"
       ],
       "interval": 2000000,
-      "name": "schedule1"
+      "name": "s7-sim-schedule1"
     }
   ]
 }
