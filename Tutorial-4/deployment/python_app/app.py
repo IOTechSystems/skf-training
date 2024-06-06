@@ -45,23 +45,36 @@ def on_message(client, userdata, msg):
         get_values(msg.payload)
         if(values[0] is None or values[1] is None):
             return
-        max_temperature = loaded_model.predict([[values[0], values[1]]])[0] * 1.1
-        new_alarm = values[2] > max_temperature
+        max_temperature = loaded_model.predict([[values[0], values[1]]])[0] * 1.4
+        new_alarm = max_temperature < values[2]
+        print(max_temperature,"vs",values[2],"  -   ", str(new_alarm))
         if new_alarm != alarm:
             alarm = new_alarm
-            print(f"Alarm: {alarm}")
-            payload = {
-                "client": "example",
-                "request_id": "1031",
-                "op": "device:put",
-                "type": "xrt.request:1.0",
-                "device": "S7-Server",
-                "values": {
-                    "Alarm_Bool": str(alarm)
-                }
-            }
-            client.publish(result_topic, json.dumps(payload))
-        socketio.emit('update_values', {'values': values, 'alarm': bool(alarm)})
+            if (alarm):
+                payload ={
+			"client": "example",
+			"request_id": "1031",
+			"op": "device:put",
+			"type": "xrt.request:1.0",
+			"device": "S7-Server",
+			"values": {
+			    "Alarm": True
+			}
+		    }
+                client.publish(result_topic, json.dumps(payload))
+            else:
+                payload = {
+			"client": "example",
+			"request_id": "1031",
+			"op": "device:put",
+			"type": "xrt.request:1.0",
+			"device": "S7-Server",
+			"values": {
+			    "Alarm": True
+			}
+		    }
+                client.publish(result_topic, json.dumps(payload))
+        socketio.emit('update_values', {'values': values, 'alarm': bool(new_alarm)})
 
 def get_values(payload):
     global values
