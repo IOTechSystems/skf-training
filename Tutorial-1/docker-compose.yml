@@ -37,7 +37,6 @@ services:
     ports:
       - 5060:80
     volumes:
-      # Mounts the Tutorials config and the License file to container
       - ./virtual/deployment:/opt/iotech/xrt/2.2/deployment
       - ${XRT_LICENSE_FILE}:/opt/iotech/xrt/2.2/license.json
     networks:

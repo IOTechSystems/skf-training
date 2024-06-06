@@ -36,7 +36,7 @@ services:
       - 8080:8080
 
   xrt:
-    image: iotechsys/xrt-server:2.2
+    image: iotechsys/xrt:2.1
     container_name: xrt-opc-ua
     restart: unless-stopped
     depends_on:
