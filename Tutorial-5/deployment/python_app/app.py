@@ -54,28 +54,28 @@ def on_message(client, userdata, msg):
             alarm = new_alarm
             print(f"Alarm: {alarm}")
             if (alarm):
-                payload = '''{
-                    "client": "example",
-                    "request_id": "1031",
-                    "op": "device:put",
-                    "type": "xrt.request:1.0",
-                    "device": "S7-Server",
-                    "values": {
-                        "Alarm": true
-                    }
-                }'''
+                payload ={
+			"client": "example",
+			"request_id": "1031",
+			"op": "device:put",
+			"type": "xrt.request:1.0",
+			"device": "S7-Server",
+			"values": {
+			    "Alarm": True
+			}
+		    }
                 client.publish(result_topic, json.dumps(payload))
             else:
-                payload = '''{
-                    "client": "example",
-                    "request_id": "1031",
-                    "op": "device:put",
-                    "type": "xrt.request:1.0",
-                    "device": "S7-Server",
-                    "values": {
-                        "Alarm": false
-                    }
-                }'''
+                payload = {
+			"client": "example",
+			"request_id": "1031",
+			"op": "device:put",
+			"type": "xrt.request:1.0",
+			"device": "S7-Server",
+			"values": {
+			    "Alarm": True
+			}
+		    }
                 client.publish(result_topic, json.dumps(payload))
         socketio.emit('update_values', {'values': values, 'alarm': bool(new_alarm)})
 
