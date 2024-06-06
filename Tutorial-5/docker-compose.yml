@@ -58,8 +58,6 @@ services:
       XRT_LICENSE_FILE: /opt/iotech/xrt/2.2/license.json
       XRT_MQTT_BROKER: tcp://mqtt:1883
       S7_SIM_ADDRESS: 10.10.0.50
-      XRT_MQTT_USERNAME:
-      XRT_MQTT_PASSWORD:
       XRT_INFLUXDB_SERVICE: http://influxdb:8086
       XRT_INFLUXDB_USERNAME: admin
       XRT_INFLUXDB_PASSWORD: adminadminadmin
