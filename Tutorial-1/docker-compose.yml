@@ -32,8 +32,6 @@ services:
       XRT_LICENSE_FILE: /opt/iotech/xrt/2.2/license.json
       # MQTT Config for XRT. These env vars are used in the MQTT bridge config
       XRT_MQTT_BROKER: tcp://mqtt:1883
-      XRT_MQTT_USERNAME:
-      XRT_MQTT_PASSWORD:
     ports:
       - 5060:80
     volumes:

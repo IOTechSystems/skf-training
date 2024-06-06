@@ -7,15 +7,6 @@
       "protocols": {
         "Virtual": {}
       }
-    },
-    {
-      "name": "Virtual-Device2",
-      "profileName": "device-virtual2",
-      "protocols": {
-        "Other": {
-          "Address": "device-virtual-02"
-        }
-      }
     }
   ]
 }
