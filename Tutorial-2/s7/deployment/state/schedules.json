@@ -1,1 +1,1 @@
-{"apiVersion":"v2","schedules":[]}
+{"apiVersion":"v2","schedules":[{"device":"S7-Server","interval":1000000,"name":"s7-sim-schedule1","resource":["DB_1_I64"]}]}
