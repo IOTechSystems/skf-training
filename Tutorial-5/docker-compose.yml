@@ -40,7 +40,7 @@ services:
 
 
   xrt:
-    image: iotechsys/xrt:2.1
+    image: iotechsys/xrt:2.2
     container_name: xrt-opc-ua
     restart: unless-stopped
     depends_on:

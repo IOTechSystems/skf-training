@@ -3,10 +3,10 @@
     "schedules": [
       {
         "device": "Virtual-Device",
-        "interval": 500000,
+        "interval": 50000,
         "name": "schedule",
         "resource": [
-            "SineWaveWithOffsetAndPhase"
+            ".*"
         ],
         "tags": {"ScheduleName": "schedule1"}
       }

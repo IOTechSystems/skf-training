@@ -57,7 +57,7 @@ def on_message(client, userdata, msg):
                 "type": "xrt.request:1.0",
                 "device": "S7-Server",
                 "values": {
-                    "DB_1_Bool_1": str(alarm)
+                    "Alarm_Bool": str(alarm)
                 }
             }
             client.publish(result_topic, json.dumps(payload))

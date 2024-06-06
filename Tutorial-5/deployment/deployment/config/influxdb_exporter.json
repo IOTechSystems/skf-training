@@ -9,7 +9,7 @@
   "Measurement": "DeviceName",
   "Tags": ["TagDeviceName", "TagScheduleName"],
   "SelectData": [
-    { "Pattern": "xrt/devices/virtual/telemetry", "Format": "Device"}
+    { "Pattern": "xrt/devices/+/telemetry", "Format": "Device"}
   ],
   "BatchConfig":
   {

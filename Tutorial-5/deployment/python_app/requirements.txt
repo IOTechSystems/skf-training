@@ -1,3 +1,6 @@
 flask
 paho-mqtt
-apscheduler
+joblib
+scikit-learn
+flask_socketio
+opcua

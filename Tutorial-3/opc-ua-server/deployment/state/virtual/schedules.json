@@ -6,7 +6,7 @@
       "interval": 5000000,
       "name": "virtual-schedule1",
       "resource": [
-        "OtherResources"
+        ".*"
       ]
     }
   ]

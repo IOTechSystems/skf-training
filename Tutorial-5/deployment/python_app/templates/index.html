@@ -1,13 +1,131 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>MQTT Messages</title>
+  <title>CNC DATA</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.0/socket.io.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var socket = io();
+      
+      socket.on('update_values', function(data) {
+        document.getElementById('temperature').textContent = data.values[2];
+        document.getElementById('rpm').textContent = data.values[0];
+        document.getElementById('vibration').textContent = data.values[1];
+        document.getElementById('alarm').textContent = data.alarm;
+        document.getElementById('alarm-icon').textContent = data.alarm;
+
+        var alarmIcon = document.getElementById('alarm-icon');
+        alarmIcon.classList.toggle('bad', data.alarm);
+        alarmIcon.classList.toggle('good', !data.alarm);
+      });
+    });
+  </script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  color: #333;
+  text-align: center;
+  margin-top: 0;
+}
+
+.data-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
+}
+
+.data-item {
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.label {
+  font-weight: bold;
+  color: #555;
+}
+
+.value {
+  color: #333;
+  font-size: 18px;
+  margin-top: 5px;
+}
+
+.disconnected {
+  color: red;
+}
+
+.alarm {
+  color: red;
+}
+
+.status-icon {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-left: 5px;
+}
+
+.status-icon.good {
+  background-color: green;
+}
+
+.status-icon.bad {
+  background-color: red;
+}
+    </style>
 </head>
 <body>
-    <h1>Last Messages Received</h1>
-    <p>Last message received from Virtual: {{ last_message_topic1 }}</p>
-    <p>Last message received from S7: {{ last_message_topic2 }}</p>
-    <p>Value which will be written to XRT (V1 * V2): {{ last_message_topic1 * last_message_topic2 }}</p>
-    <p>Time until next message Published: {{ countdown_time|round(2) }} seconds</p>
+  <div class="container">
+    <h1>Last Messages Received from CNC</h1>
+    <div class="data-container">
+      <div class="data-item">
+        <div class="label">Connected:</div>
+        <div id="connected" class="value{% if isConnected %} connected{% else %} disconnected{% endif %}">
+          {{ isConnected }}
+          <span id="connected-icon" class="status-icon{% if isConnected %} good{% else %} bad{% endif %}"></span>
+        </div>
+      </div>
+      
+      <div class="data-item">
+        <div class="label">Temperature:</div>
+        <div id="temperature" class="value">{{ values[2] }}</div>
+      </div>
+      
+      <div class="data-item">
+        <div class="label">RPM:</div>
+        <div id="rpm" class="value">{{ values[0] }}</div>
+      </div>
+      
+      <div class="data-item">
+        <div class="label">Vibration:</div>
+        <div id="vibration" class="value">{{ values[1] }}</div>
+      </div>
+      
+      <div class="data-item">
+        <div class="label">Alarm Triggered?</div>
+        <div id="alarm" class="value{% if alarm %} alarm{% endif %}">
+          {{ alarm }}
+          <span id="alarm-icon" class="status-icon{% if alarm %} bad{% else %} good{% endif %}"></span>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

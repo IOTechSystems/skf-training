@@ -36,7 +36,7 @@ services:
         condition: service_started
 
   xrt:
-    image: iotechsys/xrt:2.1
+    image: iotechsys/xrt:2.2
     container_name: xrt-opc-ua
     restart: unless-stopped
     depends_on:
@@ -52,8 +52,6 @@ services:
       XRT_LICENSE_FILE: /opt/iotech/xrt/2.2/license.json
       XRT_MQTT_BROKER: tcp://localhost:1883
       S7_SIM_ADDRESS: tcp://mqtt:1883
-      XRT_MQTT_USERNAME:
-      XRT_MQTT_PASSWORD:
     ports:
       - 5060:80
       - 4840:4840
