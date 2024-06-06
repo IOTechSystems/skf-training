@@ -6,7 +6,7 @@ mosquitto_pub -t xrt/devices/s7/request -m \
   "request_id":"1010",
   "op": "device:add",
   "type": "xrt.request:1.0",
-  "device": "s7-sim",
+  "device": "S7-Server",
   "device_info":  {
     "profileName": "Server",
     "protocols":{

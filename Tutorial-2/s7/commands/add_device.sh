@@ -11,7 +11,7 @@ mosquitto_pub -t xrt/devices/s7/request -m \
     "profileName": "Server",
     "protocols":{
       "S7":{
-        "IP": "0.0.0.0",
+        "IP": ${S7_SIM_ADDRESS},
         "Rack": 0,
         "Slot": 2
       }
