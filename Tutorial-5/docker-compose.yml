@@ -31,7 +31,7 @@ services:
   
   opc-ua-browser:
     container_name: opc-ua-browser
-    image: iotechsys/opc-ua-browser:1.0.5
+    image: iotechsys/opc-ua-browser:latest
     restart: unless-stopped 
     networks:
       - iotech
