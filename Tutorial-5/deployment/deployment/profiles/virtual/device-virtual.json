@@ -163,6 +163,11 @@
           ]
           },
           "properties": { "valueType": "Float32", "readWrite": "R" }
+          },
+          {
+            "name": "SineWave", "description": "Value which traces a sine wave",
+            "attributes": { "sequenceType": "waveform", "shape": "sinewave", "period": 8, "amplitude": 4.0 },
+            "properties": { "valueType": "Float64", "readWrite": "R" }
           }
 
   ]

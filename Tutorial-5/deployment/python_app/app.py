@@ -5,11 +5,9 @@ import json
 import joblib
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
-from flask import Flask, render_template
 from flask_socketio import SocketIO, emit
 import paho.mqtt.client as mqtt
-import json
-import joblib
+
 allow_unsafe_werkzeug=True
 app = Flask(__name__)
 socketio = SocketIO(app)
@@ -29,6 +27,7 @@ port = 1883  # Replace with your MQTT broker port
 topic = "xrt/devices/virtual/telemetry"  # Replace with your first MQTT topic
 result_topic = "xrt/devices/s7/request"  # Replace with your result MQTT topic
 is_connected = False
+error_message = ""
 values = [None, None, None]
 alarm = False
 
@@ -50,30 +49,17 @@ def on_message(client, userdata, msg):
         print(max_temperature,"vs",values[2],"  -   ", str(new_alarm))
         if new_alarm != alarm:
             alarm = new_alarm
-            if (alarm):
-                payload ={
+            payload ={
 			"client": "example",
 			"request_id": "1031",
 			"op": "device:put",
 			"type": "xrt.request:1.0",
 			"device": "S7-Server",
 			"values": {
-			    "Alarm": True
+			    "Alarm": alarm
 			}
 		    }
-                client.publish(result_topic, json.dumps(payload))
-            else:
-                payload = {
-			"client": "example",
-			"request_id": "1031",
-			"op": "device:put",
-			"type": "xrt.request:1.0",
-			"device": "S7-Server",
-			"values": {
-			    "Alarm": True
-			}
-		    }
-                client.publish(result_topic, json.dumps(payload))
+            client.publish(result_topic, json.dumps(payload))
         socketio.emit('update_values', {'values': values, 'alarm': bool(new_alarm)})
 
 def get_values(payload):
@@ -112,7 +98,7 @@ mqttc.on_message = on_message
 
 
 try:
-    mqttc.connect("mqtt", 1883, 60)
+    mqttc.connect(broker, 1883, 60)
 except ConnectionRefusedError:
     print("Connection to MQTT broker refused. Check if the broker is running.")
 
@@ -120,7 +106,7 @@ except ConnectionRefusedError:
 @app.route('/')
 def index():
     return render_template('index.html', values=values,
-                           alarm=alarm, isConnected=is_connected)
+                           alarm=alarm, isConnected=is_connected, errorMessage=error_message)
 
 if __name__ == '__main__':
     mqttc.loop_start()
