@@ -46,7 +46,6 @@ def on_message(client, userdata, msg):
             return
         max_temperature = loaded_model.predict([[values[0], values[1]]])[0] * 1.4
         new_alarm = max_temperature < values[2]
-        print(max_temperature,"vs",values[2],"  -   ", str(new_alarm))
         if new_alarm != alarm:
             alarm = new_alarm
             payload ={

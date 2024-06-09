@@ -13,11 +13,6 @@
         document.getElementById('vibration').textContent = data.values[1];
         document.getElementById('alarm').textContent = data.alarm;
         document.getElementById('error-message').textContent = data.errorMessage;
-        document.getElementById('alarm-icon').textContent = data.alarm;
-
-        var alarmIcon = document.getElementById('alarm-icon');
-        alarmIcon.classList.toggle('bad', data.alarm);
-        alarmIcon.classList.toggle('good', !data.alarm);
       });
     });
   </script>
@@ -71,9 +66,6 @@ h1 {
   color: red;
 }
 
-.alarm {
-  color: red;
-}
 
 .status-icon {
   display: inline-block;
@@ -121,9 +113,8 @@ h1 {
       
       <div class="data-item">
         <div class="label">Alarm Triggered?</div>
-        <div id="alarm" class="value{% if alarm %} alarm{% endif %}">
+        <div id="alarm" class="value">
           {{ alarm }}
-          <span id="alarm-icon" class="status-icon{% if alarm %} bad{% else %} good{% endif %}"></span>
         </div>
       </div>
 
