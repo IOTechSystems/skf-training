@@ -7,7 +7,8 @@
           ".*"
         ],
         "interval": 200000,
-        "name": "schedule1"
+        "name": "schedule1",
+        "tags": {"ScheduleName": "schedule1"}
       }
     ]
   }

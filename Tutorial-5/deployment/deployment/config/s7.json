@@ -16,5 +16,7 @@
   "Scheduler": "sched",
   "Logger": "logger",
   "ThreadPool": "pool",
-  "Bus": "bus"
+  "Bus": "bus",
+  "Timestamp": true,
+  "PublishSource": true
 }

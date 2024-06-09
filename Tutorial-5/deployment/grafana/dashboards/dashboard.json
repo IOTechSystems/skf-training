@@ -294,7 +294,7 @@
           "refId": "A"
         }
       ],
-      "title": "Panel Title",
+      "title": "CNC RPM",
       "type": "timeseries"
     },
     {
@@ -387,7 +387,7 @@
           "refId": "A"
         }
       ],
-      "title": "Panel Title",
+      "title": "Alarm Triggered",
       "type": "timeseries"
     }
   ],
