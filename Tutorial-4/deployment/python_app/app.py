@@ -37,7 +37,7 @@ alarm = False
 def on_message(client, userdata, msg):
     global values
     global alarm
-
+    global error_message
     # Load the pre-trained model from file
     with open('model.pkl', 'rb') as file:
         loaded_model = joblib.load(file)
@@ -72,21 +72,19 @@ def on_message(client, userdata, msg):
                 }
             }
             client.publish(result_topic, json.dumps(payload))
-
+        if alarm:
             # Set the error message on website and S7 device
-            #set_error_message(client, "Mill is too hot!")
+            set_error_message(client, "Mill is too hot!")
         else:
             # Set the error message on website and S7 device
-            #set_error_message(client, "Good")
-
+            set_error_message(client, "Good")
         # Emit the updated values and alarm state via SocketIO
-        socketio.emit('update_values', {'values': values, 'alarm': bool(new_alarm)})
+        socketio.emit('update_values', {'values': values, 'alarm': bool(new_alarm), 'errorMessage': error_message})
 
 # Function to set the error message and publish it via MQTT and SocketIO
 def set_error_message(client, msg):
-    # Emit the error message via SocketIO
-    socketio.emit('update_values', {'error_message': msg})
-
+    global error_message
+    error_message = msg
     # Publish the error message via MQTT for XRT to update S7 device with
     payload = {
         "client": "example",

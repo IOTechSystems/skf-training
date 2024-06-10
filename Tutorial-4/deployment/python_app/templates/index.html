@@ -3,19 +3,38 @@
 <head>
   <title>CNC DATA</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.0/socket.io.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var socket = io();
-      
-      socket.on('update_values', function(data) {
+<script>
+  function capitalizeBoolean(bool) {
+    const strValue = bool.toString();
+    return strValue.charAt(0).toUpperCase() + strValue.slice(1);
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var socket = io();
+    
+    socket.on('update_values', function(data) {
+      if (data.values[2] !== null) {
         document.getElementById('temperature').textContent = data.values[2];
+      }
+      
+      if (data.values[0] !== null) {
         document.getElementById('rpm').textContent = data.values[0];
+      }
+      
+      if (data.values[1] !== null) {
         document.getElementById('vibration').textContent = data.values[1];
-        document.getElementById('alarm').textContent = data.alarm;
+      }
+      
+      if (data.alarm !== null) {
+        document.getElementById('alarm').textContent = capitalizeBoolean(data.alarm);
+      }
+      
+      if (data.errorMessage !== null) {
         document.getElementById('error-message').textContent = data.errorMessage;
-      });
+      }
     });
-  </script>
+  });
+</script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -98,29 +117,28 @@ h1 {
       
       <div class="data-item">
         <div class="label">Temperature:</div>
-        <div id="temperature" class="value">{{ values[2] }}</div>
+        <div id="temperature" class="value"></div>
       </div>
       
       <div class="data-item">
         <div class="label">RPM:</div>
-        <div id="rpm" class="value">{{ values[0] }}</div>
+        <div id="rpm" class="value"></div>
       </div>
       
       <div class="data-item">
         <div class="label">Vibration:</div>
-        <div id="vibration" class="value">{{ values[1] }}</div>
+        <div id="vibration" class="value"></div>
       </div>
       
       <div class="data-item">
         <div class="label">Alarm Triggered?</div>
         <div id="alarm" class="value">
-          {{ alarm }}
         </div>
       </div>
 
       <div class="data-item">
         <div class="label">Error Message:</div>
-        <div id="error-message" class="value">{{ errorMessage }}</div>
+        <div id="error-message" class="value"></div>
       </div>
     </div>
   </div>
