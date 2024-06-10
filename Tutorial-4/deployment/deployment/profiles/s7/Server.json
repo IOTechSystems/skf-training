@@ -23,7 +23,7 @@
                 "start": 120,
                 "type": "IPU"
             },
-            "name": "IPU_1_String_Test",
+            "name": "Error_Message",
             "properties": {
                 "readWrite": "RW",
                 "valueType": "String"

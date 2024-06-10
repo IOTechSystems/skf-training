@@ -17,6 +17,18 @@
                 "valueType": "Bool"
             }
         },
+        {
+            "attributes": {
+                "size": 20,
+                "start": 120,
+                "type": "IPU"
+            },
+            "name": "Error_Message",
+            "properties": {
+                "readWrite": "RW",
+                "valueType": "String"
+            }
+        }
     ],
     "deviceCommands": [{
         "name": "DB-Test",
