@@ -24,7 +24,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "cdnsrivgz320wc"
+        "uid": "XRT"
       },
       "fieldConfig": {
         "defaults": {
@@ -104,7 +104,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "cdnsrivgz320wc"
+            "uid": "XRT"
           },
           "query": "from(bucket: \"test_bucket\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r.device == \"Virtual-Device\")\n|> filter(fn: (r) => r.schedule == \"schedule1\")\n|> filter(fn: (r) => r._field == \"CNCMillTemperature\")",
           "refId": "A"
@@ -116,7 +116,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "cdnsrivgz320wc"
+        "uid": "XRT"
       },
       "fieldConfig": {
         "defaults": {
@@ -196,7 +196,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "cdnsrivgz320wc"
+            "uid": "XRT"
           },
           "query": "from(bucket: \"test_bucket\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r.device == \"Virtual-Device\")\n|> filter(fn: (r) => r.schedule == \"schedule1\")\n|> filter(fn: (r) => r._field == \"CNCMillVibration\")",
           "refId": "A"
@@ -208,7 +208,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "cdnsrivgz320wc"
+        "uid": "XRT"
       },
       "fieldConfig": {
         "defaults": {
@@ -288,7 +288,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "cdnsrivgz320wc"
+            "uid": "XRT"
           },
           "query": "from(bucket: \"test_bucket\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r.device == \"Virtual-Device\")\n|> filter(fn: (r) => r.schedule == \"schedule1\")\n|> filter(fn: (r) => r._field == \"CNCMillRPM\")",
           "refId": "A"
@@ -300,7 +300,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "cdnsrivgz320wc"
+        "uid": "XRT"
       },
       "fieldConfig": {
         "defaults": {
@@ -381,7 +381,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "cdnsrivgz320wc"
+            "uid": "XRT"
           },
           "query": "from(bucket: \"test_bucket\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r.device == \"S7-Server\")\n|> filter(fn: (r) => r._field == \"Alarm\")",
           "refId": "A"
