@@ -113,7 +113,9 @@ services:
       - '3000:3000'
     volumes:
       - grafana-storage:/var/lib/grafana
-      - ./deployment/grafana/:/etc/grafana/provisioning
+      - ./deployment/grafana/datasources:/etc/grafana/provisioning/datasources
+      - ./deployment/grafana/dashboards/main.yaml:/etc/grafana/provisioning/dashboards/main.yaml
+      - ./deployment/grafana/dashboards/SKF:/var/lib/grafana/dashboards
     depends_on:
       - influxdb
     environment:
