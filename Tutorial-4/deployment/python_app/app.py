@@ -72,12 +72,12 @@ def on_message(client, userdata, msg):
                 }
             }
             client.publish(result_topic, json.dumps(payload))
-        if alarm:
-            # Set the error message on website and S7 device
-            set_error_message(client, "Mill is too hot!")
-        else:
-            # Set the error message on website and S7 device
-            set_error_message(client, "Good")
+    #   if alarm:
+    #       # Set the error message on website and S7 device
+    #       set_error_message(client, "Mill is too hot!")
+    #   else:
+    #       # Set the error message on website and S7 device
+    #       set_error_message(client, "Good")
         # Emit the updated values and alarm state via SocketIO
         socketio.emit('update_values', {'values': values, 'alarm': bool(new_alarm), 'errorMessage': error_message})
 
